@@ -22,7 +22,15 @@
   "engines": {
     "node": ">=18"
   },
-  "keywords": [],
+  "keywords": [
+    "unicode",
+    "script-detection",
+    "text-analysis",
+    "string-utils",
+    "i18n",
+    "security",
+    "developer-tools"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/alcanivorax/detect-script.git"
