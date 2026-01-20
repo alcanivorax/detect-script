@@ -5,7 +5,7 @@ import { getScriptFromCodePoint } from "./getScriptFromCodePoint.js";
  * Detects the dominant Unicode script used in the given text.
  * Returns a script name (Title Case) or "Unknown".
  */
-export function detectPrimaryScript(text: string): string {
+export function detectPrimaryScript(text: unknown): string {
   const normalized = normalize(text);
   if (normalized === "") return "Unknown";
 

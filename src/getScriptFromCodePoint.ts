@@ -1,41 +1,105 @@
+type ScriptRange = [number, number];
+
+const SCRIPT_RANGES: Record<string, ScriptRange[]> = {
+  // Indian scripts
+  Devanagari: [[0x0900, 0x097f]],
+  Bengali: [[0x0980, 0x09ff]],
+  Gurmukhi: [[0x0a00, 0x0a7f]],
+  Gujarati: [[0x0a80, 0x0aff]],
+  Oriya: [[0x0b00, 0x0b7f]],
+  Tamil: [[0x0b80, 0x0bff]],
+  Telugu: [[0x0c00, 0x0c7f]],
+  Kannada: [[0x0c80, 0x0cff]],
+  Malayalam: [[0x0d00, 0x0d7f]],
+  Sinhala: [[0x0d80, 0x0dff]],
+
+  // Japanese
+  Hiragana: [[0x3040, 0x309f]],
+  Katakana: [
+    [0x30a0, 0x30ff],
+    [0x31f0, 0x31ff],
+  ],
+
+  // CJK
+  Han: [
+    [0x4e00, 0x9fff],
+    [0x3400, 0x4dbf],
+    [0x20000, 0x2a6df],
+    [0x2a700, 0x2b73f],
+    [0x2b740, 0x2b81f],
+    [0x2b820, 0x2ceaf],
+    [0x2ceb0, 0x2ebef],
+    [0xf900, 0xfaff],
+  ],
+  Bopomofo: [
+    [0x3100, 0x312f],
+    [0x31a0, 0x31bf],
+  ],
+  Hangul: [
+    [0xac00, 0xd7af],
+    [0x1100, 0x11ff],
+    [0x3130, 0x318f],
+  ],
+
+  // European
+  Latin: [
+    [0x0041, 0x007a],
+    [0x00c0, 0x024f],
+    [0x1e00, 0x1eff],
+  ],
+  Greek: [
+    [0x0370, 0x03ff],
+    [0x1f00, 0x1fff],
+  ],
+  Cyrillic: [
+    [0x0400, 0x04ff],
+    [0x0500, 0x052f],
+  ],
+  Armenian: [[0x0530, 0x058f]],
+  Georgian: [
+    [0x10a0, 0x10ff],
+    [0x2d00, 0x2d2f],
+  ],
+
+  // Middle Eastern
+  Arabic: [
+    [0x0600, 0x06ff],
+    [0x0750, 0x077f],
+    [0xfb50, 0xfdff],
+    [0xfe70, 0xfeff],
+  ],
+  Hebrew: [[0x0590, 0x05ff]],
+  Syriac: [[0x0700, 0x074f]],
+  Thaana: [[0x0780, 0x07bf]],
+  Nko: [[0x07c0, 0x07ff]],
+  Samaritan: [[0x0800, 0x083f]],
+  Mandaic: [[0x0840, 0x085f]],
+
+  // Southeast Asian
+  Thai: [[0x0e00, 0x0e7f]],
+  Lao: [[0x0e80, 0x0eff]],
+  Tibetan: [[0x0f00, 0x0fff]],
+  Myanmar: [[0x1000, 0x109f]],
+  Khmer: [[0x1780, 0x17ff]],
+
+  // Other
+  Ethiopic: [
+    [0x1200, 0x137f],
+    [0x1380, 0x139f],
+  ],
+  Cherokee: [[0x13a0, 0x13ff]],
+  Mongolian: [[0x1800, 0x18af]],
+  Yi: [[0xa000, 0xa48f]],
+  Vai: [[0xa500, 0xa63f]],
+};
+
 export function getScriptFromCodePoint(code: number): string | null {
-  // --- Latin ---
-  if (
-    (code >= 0x0041 && code <= 0x007a) || // Basic Latin
-    (code >= 0x00c0 && code <= 0x024f) // Latin-1 Supplement + Extended
-  ) {
-    return "Latin";
+  for (const [script, ranges] of Object.entries(SCRIPT_RANGES)) {
+    for (const [start, end] of ranges) {
+      if (code >= start && code <= end) {
+        return script;
+      }
+    }
   }
-
-  // --- Devanagari ---
-  if (code >= 0x0900 && code <= 0x097f) {
-    return "Devanagari";
-  }
-
-  // --- Cyrillic ---
-  if (code >= 0x0400 && code <= 0x04ff) {
-    return "Cyrillic";
-  }
-
-  // --- Han ---
-  if (code >= 0x4e00 && code <= 0x9fff) {
-    return "Han";
-  }
-
-  // --- Hiragana ---
-  if (code >= 0x3040 && code <= 0x309f) {
-    return "Hiragana";
-  }
-
-  // --- Katakana ---
-  if (code >= 0x30a0 && code <= 0x30ff) {
-    return "Katakana";
-  }
-
-  // --- Hangul ---
-  if (code >= 0xac00 && code <= 0xd7af) {
-    return "Hangul";
-  }
-
   return null;
 }

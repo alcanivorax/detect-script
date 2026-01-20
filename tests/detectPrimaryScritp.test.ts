@@ -9,5 +9,6 @@ describe("detectLanguage", () => {
 
   it("unknown cases", () => {
     expect(detectPrimaryScript("🔥🚀")).toBe("Unknown");
+    expect(detectPrimaryScript("")).toBe("Unknown");
   });
 });
